@@ -39,7 +39,7 @@ class RunTest:
         if resp.status_code != 200:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
-        if not resp.json().keys() == ["users"]:
+        if not list(resp.json().keys()) == ["users"]:
             self.check_message = 'FAIL - top level response wrong'
             return False
         users = resp.json().get('users')
@@ -47,7 +47,7 @@ class RunTest:
             self.check_message = 'FAIL - users is not a list'
             return False
         for user in users:
-            if not user.keys() == self.user_keys:
+            if not list(user.keys()).sort() == self.user_keys.sort():
                 self.check_message = 'FAIL - a user response is unexpected'
                 return False
             if type(user.get('groups')) != list:
@@ -61,7 +61,6 @@ class RunTest:
         method = 'GET'
         resource = 'users'
         full_url = '%s%s' % (base_url, resource)
-        print(full_url)
         r = requests.get(full_url)
         if self.empty_list:
             return self.verify_empty(r), r

@@ -9,11 +9,9 @@ except:
     from urlparse import parse_qs
 
 
-# FIXME: config file
-HOST = 'http://localhost'
-PORT = '8000'
-#HOST = 'https://random-coding-things-yousirs.herokuapp.com'
-#PORT = '443'
+import config
+HOST = config.TEST_HOST
+PORT = config.TEST_PORT
 
 def parse_the_things():
     test_args = argparse.ArgumentParser()

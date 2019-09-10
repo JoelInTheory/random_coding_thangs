@@ -44,7 +44,7 @@ class RunTest:
                 self.check_message = 'FAIL - empty list when expected populated'
                 return False
             for group_name, group_info in resp_json.items():
-                if (group_info.keys() == ['members'] and
+                if (list(group_info.keys()) == ['members'] and
                     type(group_info['members']) == list):
                     self.check_message = 'OK - generic group list passes'
                     return True

@@ -124,4 +124,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-yousirs/backend/data/you_sirs.db
+backend/data/you_sirs.db
+config.py

@@ -17,8 +17,8 @@ class UserModel(db.Model):
 
     @classmethod
     def find_by(cls, kv_dict):
-        field = kv_dict.keys()[0]
-        value = kv_dict.values()[0]
+        field = list(kv_dict.keys())[0]
+        value = list(kv_dict.values())[0]
        
         # FIXME: fix these placeholder  filter bys
         if field == 'userid':

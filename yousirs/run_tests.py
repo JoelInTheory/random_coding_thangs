@@ -11,7 +11,7 @@ except:
 
 # FIXME: config file
 HOST = 'localhost'
-PORT = '5000'
+PORT = '8000'
 
 def parse_the_things():
     test_args = argparse.ArgumentParser()
@@ -59,25 +59,25 @@ sep = '-' * 100
 if __name__ == '__main__':
     test_args = parse_the_things()
     for test_name, test_obj in suite.items():
-        print sep
+        print(sep)
         result, response = test_obj.test()
-        print '%s: %s' % (test_name.ljust(35), test_obj.check_message)
+        print('%s: %s' % (test_name.ljust(35), test_obj.check_message))
         if not result:
-            print "ERROR RESPONSE:"
-            print json.dumps(response.json(), indent=4)
+            print("ERROR RESPONSE:")
+            print(json.dumps(response.json(), indent=4))
         if test_args.verbose:
             try:
                 data = parse_qs(response.request.body)
             except:
                 data = {}
-            print "request: %s - %s - %s - %s" % (response.request.method,
+            print("request: %s - %s - %s - %s" % (response.request.method,
                                                   response.status_code,
                                                   response.request.url,
-                                                  data)
+                                                  data))
             for resource in ['users', 'groups']:
-                print resource.upper()
+                print(resource.upper())
                 r = requests.get('http://%s:%s/%s' % (HOST, PORT, resource)) 
-                print json.dumps(r.json(), indent=4)
+                print(json.dumps(r.json(), indent=4))
         if test_args.slow:
             try:
                 raw_input("Press enter for next test")

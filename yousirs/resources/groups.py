@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import request
-from models.groups import GroupsModel
-from models.user import UserModel
+from yousirs.models.groups import GroupsModel
+from yousirs.models.user import UserModel
 
 from sqlalchemy import exc
 

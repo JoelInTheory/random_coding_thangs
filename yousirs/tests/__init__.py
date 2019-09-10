@@ -1,10 +1,10 @@
-import USERS_GET
-import USERS_GET_USERID
-import USERS_POST
-import USERS_DELETE_USERID
-import USERS_PUT_USERID
+from . import  USERS_GET
+from . import  USERS_GET_USERID
+from . import  USERS_POST
+from . import  USERS_DELETE_USERID
+from . import  USERS_PUT_USERID
 
-import GROUPS_GET
-import GROUPS_POST
-import GROUPS_GET_GROUPNAME
-import GROUPS_DELETE_GROUPNAME
+from . import  GROUPS_GET
+from . import  GROUPS_POST
+from . import  GROUPS_GET_GROUPNAME
+from . import  GROUPS_DELETE_GROUPNAME

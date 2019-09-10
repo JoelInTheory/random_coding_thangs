@@ -101,6 +101,7 @@ celerybeat-schedule
 .venv
 env/
 venv/
+py3venv/
 ENV/
 env.bak/
 venv.bak/

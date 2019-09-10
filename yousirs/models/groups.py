@@ -1,4 +1,4 @@
-from backend.alchemy import backend as db
+from yousirs.backend.alchemy import backend as db
 try:
     from user import UserModel
 except:

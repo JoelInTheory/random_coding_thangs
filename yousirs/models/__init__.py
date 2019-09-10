@@ -1,3 +1,3 @@
-import models.user
-import models.groups
-import models.user_groups
+import yousirs.models.user
+import yousirs.models.groups
+import yousirs.models.user_groups

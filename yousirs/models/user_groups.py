@@ -1,4 +1,4 @@
-from backend.alchemy import backend as db
+from yousirs.backend.alchemy import backend as db
 import json
 
 class UserGroupModel(db.Model):

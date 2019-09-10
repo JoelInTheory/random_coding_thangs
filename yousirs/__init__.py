@@ -17,6 +17,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % db_file
 app.config['JSON_SORT_KEYS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
+from yousirs.backend.alchemy import backend
+backend.init_app(app)
+
 api = Api(app)
 
 # instantiate db
@@ -41,7 +44,4 @@ api.add_resource(Groups, '/groups',
                          '/groups/',
                          '/groups/<string:groupname>')
 
-
-from yousirs.backend.alchemy import backend
-backend.init_app(app)
 

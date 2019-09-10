@@ -10,8 +10,10 @@ except:
 
 
 # FIXME: config file
-HOST = 'localhost'
+HOST = 'http://localhost'
 PORT = '8000'
+#HOST = 'https://random-coding-things-yousirs.herokuapp.com'
+#PORT = '443'
 
 def parse_the_things():
     test_args = argparse.ArgumentParser()

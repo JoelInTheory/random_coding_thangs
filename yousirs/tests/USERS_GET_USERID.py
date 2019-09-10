@@ -53,7 +53,7 @@ class RunTest:
         
 
     def test(self):
-        base_url = 'http://%s:%s/' % (self.host, self.port)
+        base_url = '%s:%s/' % (self.host, self.port)
         method = 'GET'
         resource = 'users'
         if self.check == 'user_get_not_found':

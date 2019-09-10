@@ -61,7 +61,7 @@ class RunTest:
         return False
 
     def test(self):
-        base_url = 'http://%s:%s/' % (self.host, self.port)
+        base_url = '%s:%s/' % (self.host, self.port)
         method = 'POST'
         resource = 'groups'
         full_url = '%s%s' % (base_url, resource)

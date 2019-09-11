@@ -125,4 +125,3 @@ dmypy.json
 .pyre/
 
 backend/data/you_sirs.db
-config.py

@@ -2,7 +2,6 @@
 PUT /groups/<group name>
     Updates the membership list for the group. The body of the request should
     be a JSON list describing the group's members.
-cleancurl -X PUT localhost:5000/groups/test_group_two -H 'Content-Type: application/json' -d '["test2", "test1", "updated_test4"]
 
 expected:
     200 created - group populated
@@ -16,6 +15,7 @@ expected:
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, check):
         self.host = host
@@ -25,7 +25,7 @@ class RunTest:
 
         self.good_post_template = {"message": "group created successfully",
                                    "response": {}
-                                  }
+                                   }
         self.test_groups = {'good': [{'first_name': 'the',
                                       'last_name': 'good',
                                       'userid': 'blondie'}],
@@ -35,10 +35,9 @@ class RunTest:
                             'ugly': [{'first_name': 'the',
                                       'last_name': 'bad',
                                       'userid': 'tuco'},
-                                      {'first_name': 'the',
-                                       'last_name': 'bad',
-                                       'userid': 'joel'}]}
-
+                                     {'first_name': 'the',
+                                      'last_name': 'bad',
+                                      'userid': 'joel'}]}
 
     def setup_test_groups(self):
         base_url = '%s:%s/groups' % (self.host, self.port)
@@ -90,7 +89,7 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'PUT'
+        # method = 'PUT'
         resource = 'groups'
         full_url = '%s%s' % (base_url, resource)
 

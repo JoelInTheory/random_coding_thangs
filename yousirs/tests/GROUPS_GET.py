@@ -11,6 +11,8 @@ NOTE: this isn't in the spec but it's useful for troubleshooting so, here we are
 """
 
 import requests
+from json.decoder import JSONDecodeError
+
 
 class RunTest:
     def __init__(self, host, port, empty_list):
@@ -37,15 +39,14 @@ class RunTest:
             return False
         try:
             resp_json = resp.json()
-        except:
+        except JSONDecodeError:
             self.check_message = 'FAIL - could not parse group list to json'
         if resp_json:
             if resp_json == self.expected_empty:
                 self.check_message = 'FAIL - empty list when expected populated'
                 return False
             for group_name, group_info in resp_json.items():
-                if (list(group_info.keys()) == ['members'] and
-                    type(group_info['members']) == list):
+                if (list(group_info.keys()) == ['members'] and type(group_info['members']) == list):
                     self.check_message = 'OK - generic group list passes'
                     return True
         self.check_message = 'FAIL - unexpected failure on generic group check'
@@ -53,7 +54,7 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'GET'
+        # method = 'GET'
         resource = 'groups'
         full_url = '%s%s' % (base_url, resource)
         r = requests.get(full_url)

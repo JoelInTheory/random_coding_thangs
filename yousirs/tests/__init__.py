@@ -9,3 +9,5 @@ from . import GROUPS_POST
 from . import GROUPS_GET_GROUPNAME
 from . import GROUPS_DELETE_GROUPNAME
 from . import GROUPS_PUT_GROUPNAME
+
+# flake8: noqa

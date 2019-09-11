@@ -12,6 +12,7 @@ NOTE: this isn't in the spec but it's useful for troubleshooting so, here we are
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, empty_list):
         self.host = host
@@ -35,7 +36,7 @@ class RunTest:
         self.check_message = 'FAIL - received non-empty or malformed user list'
         return False
 
-    def verify_generic(self,resp):
+    def verify_generic(self, resp):
         if resp.status_code != 200:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
@@ -58,7 +59,7 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'GET'
+        # method = 'GET'
         resource = 'users'
         full_url = '%s%s' % (base_url, resource)
         r = requests.get(full_url)

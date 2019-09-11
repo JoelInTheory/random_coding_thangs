@@ -14,6 +14,7 @@ expected:
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, check):
         self.host = host
@@ -29,6 +30,7 @@ class RunTest:
                              'userid': 'test2'}
         self.bad_user_data = {'first_name': 'fouroh',
                               'userid': 'fourohnine'}
+
     def check_400(self, resp):
         if resp.status_code == 400:
             self.check_message = 'OK - expected 400 received'
@@ -44,7 +46,7 @@ class RunTest:
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']}
-                            }
+                             }
         if resp.json() != expected_response:
             self.check_message = 'FAIL - unexpected post create response'
             return False
@@ -60,19 +62,19 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'POST'
+        # method = 'POST'
         resource = 'users'
         full_url = '%s%s' % (base_url, resource)
         if self.check == 'malformed_new_user_post':
-            r = requests.post(full_url, data = self.bad_user_data)
+            r = requests.post(full_url, data=self.bad_user_data)
             return self.check_400(r), r
         if self.check == 'good_new_user_post':
-            r = requests.post(full_url, data = self.new_user_one)
+            r = requests.post(full_url, data=self.new_user_one)
             return self.check_good_post(r, self.new_user_one), r
         if self.check == 'dupe_new_user_post':
-            r = requests.post(full_url, data = self.new_user_two)
+            r = requests.post(full_url, data=self.new_user_two)
             first_check_res = self.check_good_post(r, self.new_user_two)
             if not first_check_res:
                 return first_check_res, r
-            r = requests.post(full_url, data = self.new_user_two)
+            r = requests.post(full_url, data=self.new_user_two)
             return self.check_dupe_post(r), r

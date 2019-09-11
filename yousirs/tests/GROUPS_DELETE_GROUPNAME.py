@@ -11,6 +11,7 @@ expected:
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, check):
         self.host = host
@@ -37,17 +38,17 @@ class RunTest:
     def check_group_delete_no_id(self, resp):
         if resp.status_code != 405:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
-            return false
+            return False
         self.check_message = 'OK - expected 405 not allowed'
         return True
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'DELETE'
+        # method = 'DELETE'
         resource = 'groups'
         full_url = '%s%s' % (base_url, resource)
         if self.check == 'group_delete':
-            r = requests.post(full_url, data = self.test_group_three)
+            r = requests.post(full_url, data=self.test_group_three)
             full_url = '%s%s/%s' % (base_url, resource, self.test_group_three['groupname'])
             r = requests.delete(full_url)
             result = self.check_delete_group(r)

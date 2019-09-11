@@ -1,5 +1,5 @@
 from yousirs.backend.alchemy import backend as db
-import json
+
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -11,7 +11,7 @@ class UserModel(db.Model):
 
     groups = db.relationship('GroupsModel', secondary="user_groups")
 
-    def __init__(self, userid, id = None):
+    def __init__(self, userid, id=None):
         self.userid = userid
         self.id = id
 

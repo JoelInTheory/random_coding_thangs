@@ -1,5 +1,5 @@
 from yousirs.backend.alchemy import backend as db
-import json
+
 
 class UserGroupModel(db.Model):
     __tablename__ = 'user_groups'
@@ -8,7 +8,6 @@ class UserGroupModel(db.Model):
     users_row_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     groups_row_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
-
     users = db.relationship('UserModel',
                             backref=db.backref("user_groups",
                                                cascade="all, delete-orphan"))
@@ -16,7 +15,7 @@ class UserGroupModel(db.Model):
                              backref=db.backref("user_groups",
                                                 cascade="all, delete-orphan"))
 
-    def __init__(self, name = None):
+    def __init__(self, name=None):
         self.name = name
 
     def save(self):

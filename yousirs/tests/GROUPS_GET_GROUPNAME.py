@@ -9,6 +9,8 @@ expected:
 """
 
 import requests
+from json.decoder import JSONDecodeError
+
 
 class RunTest:
     def __init__(self, host, port, check):
@@ -32,7 +34,7 @@ class RunTest:
             return False
         try:
             resp_json = resp.json()
-        except:
+        except JSONDecodeError:
             self.check_message = 'FAIL - could not parse response as json'
             return False
         if resp_json == expected_list:
@@ -44,7 +46,7 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'GET'
+        # method = 'GET'
         resource = 'groups'
         if self.check == 'group_get_not_found':
             full_url = '%s%s/%s' % (base_url, resource, 'FAKE_GROUP_SHOUDNT_EXIST')
@@ -55,6 +57,3 @@ class RunTest:
             full_url = '%s%s/%s' % (base_url, resource, self.test_group_one['groupname'])
             r = requests.get(full_url)
             return self.check_group_get(r, []), r
-
-        if self.check == 'group_get_info_populated':
-            return

@@ -13,6 +13,7 @@ expected:
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, check):
         self.host = host
@@ -21,8 +22,9 @@ class RunTest:
         self.check_message = None
 
         self.new_user_four = {'first_name': 'TTTTester',
-                               'last_name': 'Four',
-                               'userid': 'test4'}
+                              'last_name': 'Four',
+                              'userid': 'test4'}
+
         self.updated_user = {}
         for user_key, user_value in self.new_user_four.items():
             self.updated_user[user_key] = 'updated_%s' % user_value
@@ -35,7 +37,7 @@ class RunTest:
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']}
-                            }
+                             }
         if resp.json() != expected_response:
             self.check_message = 'FAIL - unexpected post create response'
             return False
@@ -51,8 +53,8 @@ class RunTest:
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']
-                                        }
-                            }
+                                          }
+                             }
         if resp.json() == expected_response:
             self.check_message = 'OK - put succeeded'
             return True
@@ -69,7 +71,7 @@ class RunTest:
     def check_user_put_no_id(self, resp):
         if resp.status_code != 405:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
-            return false
+            return False
         self.check_message = 'OK - expected 405 not allowed'
         return True
 
@@ -82,27 +84,27 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'PUT'
+        # method = 'PUT'
         resource = 'users'
         full_url = '%s%s' % (base_url, resource)
         if self.check == 'user_update':
-            r = requests.post(full_url, data = self.new_user_four)
+            r = requests.post(full_url, data=self.new_user_four)
             first_check_res = self.check_good_post(r, self.new_user_four)
             if not first_check_res:
                 return first_check_res, r
             full_url = '%s%s/%s' % (base_url, resource, self.new_user_four['userid'])
-            r = requests.put(full_url, data = self.updated_user)
+            r = requests.put(full_url, data=self.updated_user)
             return self.check_good_put(r, self.updated_user), r
 
         if self.check == 'user_update_id_conflict':
             full_url = '%s%s/%s' % (base_url, resource, self.updated_user['userid'])
             self.updated_user['userid'] = 'test1'
-            r = requests.put(full_url, data = self.updated_user)
+            r = requests.put(full_url, data=self.updated_user)
             return self.check_user_id_conflict(r), r
 
         if self.check == 'user_update_not_found':
             full_url = '%s%s/%s' % (base_url, resource, 'FAKE_USERNAME_SHOULDNT_EXIST')
-            r = requests.put(full_url, data = self.updated_user)
+            r = requests.put(full_url, data=self.updated_user)
             return self.check_user_put_not_found(r), r
 
         if self.check == 'user_update_no_id':

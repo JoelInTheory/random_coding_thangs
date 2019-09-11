@@ -1,9 +1,9 @@
 from yousirs.backend.alchemy import backend as db
 try:
     from user import UserModel
-except:
+except ImportError:
     from .user import UserModel
-import json
+
 
 class GroupsModel(db.Model):
     __tablename__ = 'groups'

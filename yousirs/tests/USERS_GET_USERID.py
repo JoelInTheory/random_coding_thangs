@@ -10,6 +10,7 @@ expected:
 
 import requests
 
+
 class RunTest:
     def __init__(self, host, port, check):
         self.host = host
@@ -36,7 +37,7 @@ class RunTest:
                              "last_name": user['last_name'],
                              "userid": user['userid'],
                              "groups": []
-                            }
+                             }
         # FIXME: just check if groups is list for now
         resp_json = resp.json()
         if type(resp_json.get('groups')) == list:
@@ -51,10 +52,9 @@ class RunTest:
             self.check_message = 'FAIL - groups is not a list for user'
             return False
 
-
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'GET'
+        # method = 'GET'
         resource = 'users'
         if self.check == 'user_get_not_found':
             full_url = '%s%s/%s' % (base_url, resource, 'FAKE_USER_SHOUDNT_EXIST')

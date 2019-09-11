@@ -13,6 +13,8 @@ expected:
 """
 
 import requests
+from json.decoder import JSONDecodeError
+
 
 class RunTest:
     def __init__(self, host, port, check):
@@ -23,7 +25,7 @@ class RunTest:
 
         self.good_post_template = {"message": "group created successfully",
                                    "response": {}
-                                  }
+                                   }
         self.test_group_one = {"groupname": "test_group_one"}
         self.test_group_two = {"groupname": "test_group_two"}
         self.bad_group_data = {"bad_key_is": "bad"}
@@ -41,7 +43,7 @@ class RunTest:
             return False
         try:
             resp_json = resp.json()
-        except:
+        except JSONDecodeError:
             self.check_message = 'FAIL - could not parse response to json'
             return False
         expected_response = self.good_post_template
@@ -62,19 +64,22 @@ class RunTest:
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)
-        method = 'POST'
+        # method = 'POST'
         resource = 'groups'
         full_url = '%s%s' % (base_url, resource)
+
         if self.check == 'malformed_new_group_post':
-            r = requests.post(full_url, data = self.bad_group_data)
+            r = requests.post(full_url, data=self.bad_group_data)
             return self.check_400(r), r
+
         if self.check == 'good_new_group_post':
-            r = requests.post(full_url, data = self.test_group_one)
+            r = requests.post(full_url, data=self.test_group_one)
             return self.check_good_post(r, self.test_group_one), r
+
         if self.check == 'dupe_new_group_post':
-            r = requests.post(full_url, data = self.test_group_two)
+            r = requests.post(full_url, data=self.test_group_two)
             first_check_res = self.check_good_post(r, self.test_group_two)
             if not first_check_res:
                 return first_check_res, r
-            r = requests.post(full_url, data = self.test_group_two)
+            r = requests.post(full_url, data=self.test_group_two)
             return self.check_dupe_post(r), r

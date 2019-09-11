@@ -40,7 +40,7 @@ class RunTest:
         if resp.status_code != 201:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
-        expected_response = {"message": "user created successfully", 
+        expected_response = {"message": "user created successfully",
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']}

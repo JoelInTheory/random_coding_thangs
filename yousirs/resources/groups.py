@@ -1,15 +1,15 @@
 from flask_restful import Resource, reqparse
 from flask import request
+
 from yousirs.models.groups import GroupsModel
 from yousirs.models.user import UserModel
 
 from sqlalchemy import exc
 
-import json
 
 class Groups(Resource):
     # show
-    def get(self, groupname = None):
+    def get(self, groupname=None):
         if groupname:
             lookup_data = {'name': groupname}
             group_data = GroupsModel.find_by(lookup_data)
@@ -50,17 +50,16 @@ class Groups(Resource):
         new_group = GroupsModel(group_args.groupname)
         try:
             new_group.save()
-        except exc.IntegrityError as e:
+        except exc.IntegrityError:
             return {"message": "groupname %s already exists" % group_data.name}, 409
-        except:
+        except: # noqa
             return {"message": "error creating group"}, 500
 
         return {"message": "group created successfully",
                 "response": {"groupname": new_group.name}}, 201
 
-
     # update
-    def put(self, groupname = None):
+    def put(self, groupname=None):
         if not groupname:
             return {"message": "not authorized for this resource"}, 405
 
@@ -84,10 +83,10 @@ class Groups(Resource):
         try:
             group_data.set_members(user_records)
             return {"message": "group membership updated"}, 200
-        except:
+        except: # noqa
             return {"message": "group membership update failed with an unknown error"}, 500
 
-    def delete(self, groupname = None):
+    def delete(self, groupname=None):
         if not groupname:
             return {"message": "not authorized for this resource"}, 405
 
@@ -99,7 +98,7 @@ class Groups(Resource):
 
         try:
             group_data.delete()
-        except:
+        except: # noqa
             return {"message": "error deleting group entry"}, 500
 
         return '', 204

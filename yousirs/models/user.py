@@ -19,7 +19,7 @@ class UserModel(db.Model):
     def find_by(cls, kv_dict):
         field = list(kv_dict.keys())[0]
         value = list(kv_dict.values())[0]
-       
+
         # FIXME: fix these placeholder  filter bys
         if field == 'userid':
             return cls.query.filter_by(userid=value).first()

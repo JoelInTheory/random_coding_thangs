@@ -20,7 +20,7 @@ class GroupsModel(db.Model):
     def find_by(cls, kv_dict):
         field = list(kv_dict.keys())[0]
         value = list(kv_dict.values())[0]
-        
+
         if field == 'name':
             return cls.query.filter_by(name=value).first()
         else:

@@ -10,10 +10,10 @@ class UserGroupModel(db.Model):
 
 
     users = db.relationship('UserModel',
-                            backref=db.backref("user_groups", 
+                            backref=db.backref("user_groups",
                                                cascade="all, delete-orphan"))
     groups = db.relationship('GroupsModel',
-                             backref=db.backref("user_groups", 
+                             backref=db.backref("user_groups",
                                                 cascade="all, delete-orphan"))
 
     def __init__(self, name = None):

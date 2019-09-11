@@ -50,7 +50,7 @@ class RunTest:
         else:
             self.check_message = 'FAIL - groups is not a list for user'
             return False
-        
+
 
     def test(self):
         base_url = '%s:%s/' % (self.host, self.port)

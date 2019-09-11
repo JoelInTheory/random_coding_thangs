@@ -1,6 +1,6 @@
 """
 PUT /groups/<group name>
-    Updates the membership list for the group. The body of the request should 
+    Updates the membership list for the group. The body of the request should
     be a JSON list describing the group's members.
 cleancurl -X PUT localhost:5000/groups/test_group_two -H 'Content-Type: application/json' -d '["test2", "test1", "updated_test4"]
 
@@ -9,7 +9,7 @@ expected:
     400 bad request - missing params (probably!)
     409 conflict - you made a PUT with at least one
                    user that doesn't exist
-                   great job    
+                   great job
 
 
 """
@@ -23,7 +23,7 @@ class RunTest:
         self.check = check
         self.check_message = None
 
-        self.good_post_template = {"message": "group created successfully", 
+        self.good_post_template = {"message": "group created successfully",
                                    "response": {}
                                   }
         self.test_groups = {'good': [{'first_name': 'the',
@@ -68,7 +68,7 @@ class RunTest:
                 if r.status_code != 201:
                     return False
         return True
- 
+
     def check_400(self, resp):
         if resp.status_code == 400:
             self.check_message = 'OK - expected 400 received'
@@ -130,7 +130,7 @@ class RunTest:
                 if r.status_code != 200:
                     self.check_message = 'FAIL - unexpected status code (%s)' % r.status_code
                     return False, r
-                r = requests.get('%s/%s' % (full_url, group)) 
+                r = requests.get('%s/%s' % (full_url, group))
                 if sorted(r.json()) != sorted(data):
                     self.check_message = 'FAIL - group check %s does not match expected' % group
                     return False, r

@@ -26,7 +26,7 @@ class RunTest:
         if resp.status_code != 201:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
-        expected_response = {"message": "user created successfully", 
+        expected_response = {"message": "user created successfully",
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']}
@@ -68,7 +68,7 @@ class RunTest:
             first_check_res = self.check_good_post(r, self.new_user_three)
             if not first_check_res:
                 return first_check_res, r.json()
-            full_url = '%s%s/%s' % (base_url, resource, self.new_user_three['userid']) 
+            full_url = '%s%s/%s' % (base_url, resource, self.new_user_three['userid'])
             r = requests.delete(full_url)
             result = self.check_delete_user(r)
             if result:
@@ -76,10 +76,10 @@ class RunTest:
             else:
                 return result, r
         if self.check == 'user_delete_not_found':
-            full_url = '%s%s/%s' % (base_url, resource, self.new_user_three['userid']) 
+            full_url = '%s%s/%s' % (base_url, resource, self.new_user_three['userid'])
             r = requests.delete(full_url)
             return self.check_user_delete_not_found(r), r
         if self.check == 'user_delete_no_id':
             full_url = '%s%s' % (base_url, resource)
             r = requests.delete(full_url)
-            return self.check_user_delete_no_id(r), r 
+            return self.check_user_delete_no_id(r), r

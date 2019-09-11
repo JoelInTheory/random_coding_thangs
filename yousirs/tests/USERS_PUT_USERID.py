@@ -19,7 +19,7 @@ class RunTest:
         self.port = port
         self.check = check
         self.check_message = None
-        
+
         self.new_user_four = {'first_name': 'TTTTester',
                                'last_name': 'Four',
                                'userid': 'test4'}
@@ -31,7 +31,7 @@ class RunTest:
         if resp.status_code != 201:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
-        expected_response = {"message": "user created successfully", 
+        expected_response = {"message": "user created successfully",
                              "response": {"first_name": user['first_name'],
                                           "last_name": user['last_name'],
                                           "userid": user['userid']}
@@ -47,9 +47,9 @@ class RunTest:
             self.check_message = 'FAIL - unexpected status code (%s)' % resp.status_code
             return False
 
-        expected_response = {"message": "user updated", 
-                             "response": {"first_name": user['first_name'], 
-                                          "last_name": user['last_name'], 
+        expected_response = {"message": "user updated",
+                             "response": {"first_name": user['first_name'],
+                                          "last_name": user['last_name'],
                                           "userid": user['userid']
                                         }
                             }
@@ -90,7 +90,7 @@ class RunTest:
             first_check_res = self.check_good_post(r, self.new_user_four)
             if not first_check_res:
                 return first_check_res, r
-            full_url = '%s%s/%s' % (base_url, resource, self.new_user_four['userid']) 
+            full_url = '%s%s/%s' % (base_url, resource, self.new_user_four['userid'])
             r = requests.put(full_url, data = self.updated_user)
             return self.check_good_put(r, self.updated_user), r
 
@@ -101,7 +101,7 @@ class RunTest:
             return self.check_user_id_conflict(r), r
 
         if self.check == 'user_update_not_found':
-            full_url = '%s%s/%s' % (base_url, resource, 'FAKE_USERNAME_SHOULDNT_EXIST') 
+            full_url = '%s%s/%s' % (base_url, resource, 'FAKE_USERNAME_SHOULDNT_EXIST')
             r = requests.put(full_url, data = self.updated_user)
             return self.check_user_put_not_found(r), r
 

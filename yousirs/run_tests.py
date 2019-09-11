@@ -5,7 +5,7 @@ from collections import OrderedDict
 import json
 try:
     from urllib.parse import parse_qs
-except:
+except ImportError:
     from urlparse import parse_qs
 
 
@@ -13,16 +13,19 @@ import config
 HOST = config.TEST_HOST
 PORT = config.TEST_PORT
 
+
 def parse_the_things():
     test_args = argparse.ArgumentParser()
     test_args.add_argument('--verbose',
                            action='store_true',
                            default=False,
-                           help="prints a GET on /users and /groups between each test")
+                           help="GET on /users and /groups between tests")
     test_args.add_argument('--slow',
                            action='store_true',
-                           help="wait for user input between each test, so you can be all judgey")
+                           help="wait for user input between each test")
+    # so you can be all judgey
     return test_args.parse_args()
+
 
 # TESTS
 suite = OrderedDict()
@@ -30,11 +33,11 @@ suite = OrderedDict()
 suite['user_list_empty'] = tests.USERS_GET.RunTest(HOST, PORT, True)
 suite['group_list_empty'] = tests.GROUPS_GET.RunTest(HOST, PORT, True)
 
-suite['user_post_malformed'] = tests.USERS_POST.RunTest(HOST, PORT, 'malformed_new_user_post') 
-suite['user_post'] = tests.USERS_POST.RunTest(HOST, PORT, 'good_new_user_post') 
+suite['user_post_malformed'] = tests.USERS_POST.RunTest(HOST, PORT, 'malformed_new_user_post')
+suite['user_post'] = tests.USERS_POST.RunTest(HOST, PORT, 'good_new_user_post')
 suite['user_post_duplicate'] = tests.USERS_POST.RunTest(HOST, PORT, 'dupe_new_user_post')
-suite['user_get_not_found'] = tests.USERS_GET_USERID.RunTest(HOST, PORT, 'user_get_not_found') 
-suite['user_get_ok'] = tests.USERS_GET_USERID.RunTest(HOST, PORT, 'user_get_info') 
+suite['user_get_not_found'] = tests.USERS_GET_USERID.RunTest(HOST, PORT, 'user_get_not_found')
+suite['user_get_ok'] = tests.USERS_GET_USERID.RunTest(HOST, PORT, 'user_get_info')
 suite['user_delete_ok'] = tests.USERS_DELETE_USERID.RunTest(HOST, PORT, 'user_delete')
 suite['user_delete_not_found'] = tests.USERS_DELETE_USERID.RunTest(HOST, PORT, 'user_delete_not_found')
 suite['user_delete_no_id'] = tests.USERS_DELETE_USERID.RunTest(HOST, PORT, 'user_delete_no_id')
@@ -75,7 +78,7 @@ if __name__ == '__main__':
             if type(response) == requests.models.Response:
                 try:
                     data = parse_qs(response.request.body)
-                except:
+                except ValueError:
                     data = {}
                 print("request: %s - %s - %s - %s" % (response.request.method,
                                                       response.status_code,
@@ -83,11 +86,7 @@ if __name__ == '__main__':
                                                       data))
             for resource in ['users', 'groups']:
                 print(resource.upper())
-                r = requests.get('%s:%s/%s' % (HOST, PORT, resource)) 
+                r = requests.get('%s:%s/%s' % (HOST, PORT, resource))
                 print(json.dumps(r.json(), indent=4))
         if test_args.slow:
-            try:
-                raw_input("Press enter for next test")
-                continue
-            except:
-                input("Press enter for next test")
+            input("Press enter for next test")

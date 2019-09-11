@@ -21,7 +21,7 @@ class RunTest:
         self.check = check
         self.check_message = None
 
-        self.good_post_template = {"message": "group created successfully", 
+        self.good_post_template = {"message": "group created successfully",
                                    "response": {}
                                   }
         self.test_group_one = {"groupname": "test_group_one"}

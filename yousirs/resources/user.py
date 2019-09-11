@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from yousirs.models.user import UserModel
 from sqlalchemy import exc
+
 import json
 
 class Users(Resource):

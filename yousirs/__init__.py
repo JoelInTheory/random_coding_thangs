@@ -44,4 +44,3 @@ api.add_resource(Groups, '/groups',
                          '/groups/',
                          '/groups/<string:groupname>')
 
-

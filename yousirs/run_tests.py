@@ -52,6 +52,12 @@ suite['group_delete_ok'] = tests.GROUPS_DELETE_GROUPNAME.RunTest(HOST, PORT, 'gr
 suite['group_delete_not_found'] = tests.GROUPS_DELETE_GROUPNAME.RunTest(HOST, PORT, 'group_delete_not_found')
 suite['group_delete_no_id'] = tests.GROUPS_DELETE_GROUPNAME.RunTest(HOST, PORT, 'group_delete_no_id')
 
+suite['group_put_setup_groups'] = tests.GROUPS_PUT_GROUPNAME.RunTest(HOST, PORT, 'setup_groups')
+suite['group_put_setup_users'] = tests.GROUPS_PUT_GROUPNAME.RunTest(HOST, PORT, 'setup_users')
+suite['group_put_bad_groupname'] = tests.GROUPS_PUT_GROUPNAME.RunTest(HOST, PORT, 'put_groups_404')
+suite['group_put_bad_user_in_list'] = tests.GROUPS_PUT_GROUPNAME.RunTest(HOST, PORT, 'put_bad_user_in_list')
+suite['group_put_add_users_to_groups'] = tests.GROUPS_PUT_GROUPNAME.RunTest(HOST, PORT, 'put_all_the_groups')
+
 suite['populated_group_list'] = tests.GROUPS_GET.RunTest(HOST, PORT, False)
 suite['populated_user_list'] = tests.USERS_GET.RunTest(HOST, PORT, False)
 
@@ -66,17 +72,18 @@ if __name__ == '__main__':
             print("ERROR RESPONSE:")
             print(json.dumps(response.json(), indent=4))
         if test_args.verbose:
-            try:
-                data = parse_qs(response.request.body)
-            except:
-                data = {}
-            print("request: %s - %s - %s - %s" % (response.request.method,
-                                                  response.status_code,
-                                                  response.request.url,
-                                                  data))
+            if type(response) == requests.models.Response:
+                try:
+                    data = parse_qs(response.request.body)
+                except:
+                    data = {}
+                print("request: %s - %s - %s - %s" % (response.request.method,
+                                                      response.status_code,
+                                                      response.request.url,
+                                                      data))
             for resource in ['users', 'groups']:
                 print(resource.upper())
-                r = requests.get('http://%s:%s/%s' % (HOST, PORT, resource)) 
+                r = requests.get('%s:%s/%s' % (HOST, PORT, resource)) 
                 print(json.dumps(r.json(), indent=4))
         if test_args.slow:
             try:

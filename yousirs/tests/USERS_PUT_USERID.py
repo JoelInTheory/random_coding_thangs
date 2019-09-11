@@ -96,6 +96,7 @@ class RunTest:
 
         if self.check == 'user_update_id_conflict':
             full_url = '%s%s/%s' % (base_url, resource, self.updated_user['userid'])
+            self.updated_user['userid'] = 'test1'
             r = requests.put(full_url, data = self.updated_user)
             return self.check_user_id_conflict(r), r
 

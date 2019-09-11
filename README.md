@@ -17,12 +17,19 @@ To use that, run:
 - `source make_yousirs_venv.sh`
 
 with the requirements installed you can launch a local web server serving the application via:
-- `gunicorn yousirs:app`
+```
+gunicorn yousirs:app
+```
+a more helpful launch command might be:
+```
+gunicorn --access-logfile - --log-level debug --bind 0.0.0.0:8000 yousirs:app
+```
+
 
 it should be available on `localhost:8000` by default
 
 Alternatively this app is packaged for deployment to Heroku. If you were to ask around, there may
-already be a deployment ready for you to use. 
+already be a deployment ready for you to use. The heroku branch of this repo is setup to trigger an automatic deploy.
 
 *Note: since this is using a local sqlite db to keep it simple, the data will be lost if the Heroku dynos were to ever restart, or a deploy occurs.*
 
@@ -30,17 +37,21 @@ already be a deployment ready for you to use.
 once running the following calls can be made:
 
 **/users**
-   - **GET** list of users
-   - **POST** create user (not assigned to any groups)
-   		- `body: {'first_name': <string>, 'last_name: <string>, 'userid': <userid>}`
+ - **GET** list of users
+ - **POST** create user (not assigned to any groups)
+```
+body: {'first_name': <string>, 'last_name': <string>, 'userid': <userid>}
+```
 
 **/users/\<userid\>**
 - **GET** get information for <userid\>
 - **DELETE** delete \<userid>
 - **PUT** update user information
-		- `body: {'first_name': <new first_name>, 'last_name: <new last_name>, 'userid': <new userid>}`
-		- all values required
-
+ - all values required
+ ```
+ body: {'first_name': <new first_name>, 'last_name': <new last_name>, 'userid': <new userid>}
+ ```
+ 
 **/groups**
  - **GET** list of groups
  - **POST** create empty group
@@ -52,25 +63,28 @@ once running the following calls can be made:
 - **PUT** add list of users as members of <groupid\>
   - accepts json list as body
   - curl example: 
-    - `curl -X PUT \`
-    - `-H 'Content-Type: application/json' \`
-    - ` localhost:8000/groups/muppets \`
-    - `-d '["animal", "kermit"]'`
+    ```bash
+    curl -X PUT \
+    -H 'Content-Type: application/json' \
+    localhost:8000/groups/muppets \
+    -d '["animal", "kermit"]'
+    ```
 
 ## Bundled Tests
 edit `yousirs/config.py` with appropriate host / port (default localhost / 8000) and run
 
 **python yousirs/run_tests.py**
 
-you may also pass the `--slow` (pauses for input between test) 
-
-and `--verbose` (does a full get on users / groups after each test)
+you may also pass a couple optional arguments to facilitate testing:
+- `--slow` (pauses for input between each test) 
+- `--verbose` (does a full get on users / groups after each test and displays results)
 
 **python yousirs/run_tests.py --slow --verbose**
 
 Example output (without verbose / slow for brevity)
 
-```$ python yousirs/run_tests.py 
+```
+$ python yousirs/run_tests.py 
 ----------------------------------------------------------------------------------------------------
 user_list_empty                    : OK - empty user list
 ----------------------------------------------------------------------------------------------------
@@ -79,4 +93,5 @@ group_list_empty                   : OK - empty group list
 user_post_malformed                : OK - expected 400 received
 ----------------------------------------------------------------------------------------------------
 user_post                          : OK - user create successful
-<snip>```
+<snip>
+```

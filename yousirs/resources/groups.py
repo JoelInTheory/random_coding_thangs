@@ -78,7 +78,8 @@ class Groups(Resource):
         found_ids = [user.userid for user in user_records]
         missing_ids = set(user_ids).difference(set(found_ids))
         if missing_ids:
-            return {"message": "you have provided at least one incorrect userid: %s" % ','.join(missing_ids)}, 409
+            return {"message": "you have provided at least one incorrect userid",
+                    "unprocessable_userids": list(missing_ids)}, 409
 
         try:
             group_data.set_members(user_records)

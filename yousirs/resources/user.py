@@ -27,7 +27,7 @@ class Users(Resource):
     def post(self):
         user_parse = reqparse.RequestParser()
         user_parse.add_argument('first_name',
-                                ype=str,
+                                type=str,
                                 required=True,
                                 default=None
                                 )

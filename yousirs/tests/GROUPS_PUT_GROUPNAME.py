@@ -33,10 +33,10 @@ class RunTest:
                                      'last_name': 'bad',
                                      'userid': 'angeleyes'}],
                             'ugly': [{'first_name': 'the',
-                                      'last_name': 'bad',
+                                      'last_name': 'ugly',
                                       'userid': 'tuco'},
                                      {'first_name': 'the',
-                                      'last_name': 'bad',
+                                      'last_name': 'ugly',
                                       'userid': 'joel'}]}
 
     def setup_test_groups(self):

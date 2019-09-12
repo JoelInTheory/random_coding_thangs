@@ -3,6 +3,7 @@ import argparse
 import requests
 from collections import OrderedDict
 import json
+from json.decoder import JSONDecodeError
 try:
     from urllib.parse import parse_qs
 except ImportError:
@@ -73,7 +74,13 @@ if __name__ == '__main__':
         print('%s: %s' % (test_name.ljust(35), test_obj.check_message))
         if not result:
             print("ERROR RESPONSE:")
-            print(json.dumps(response.json(), indent=4))
+            try:
+                print(json.dumps(response.json(), indent=4))
+            except (JSONDecodeError, AttributeError):
+                if type(response) == dict:
+                    print(response)
+                else:
+                    print(response.text)
         if test_args.verbose:
             if type(response) == requests.models.Response:
                 try:

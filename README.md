@@ -1,6 +1,8 @@
 # About
 This is a simple coding practice exercise making a user / group list
-The data is stored in a local sqlite db saved in `yousirs/backends/data/you_sirs.db`
+The data is stored in a local sqlite db saved in `yousirs/backends/data/you_sirs.db` by default
+If you set an environment variable of `DATABASE_URL` to a valid sqlalchemy connection string,
+it will try to use that instead.
 
 ## Installation
 requires:
@@ -31,7 +33,9 @@ it should be available on `localhost:8000` by default
 Alternatively this app is packaged for deployment to Heroku. If you were to ask around, there may
 already be a deployment ready for you to use. The heroku branch of this repo is setup to trigger an automatic deploy.
 
-*Note: since this is using a local sqlite db to keep it simple, the data will be lost if the Heroku dynos were to ever restart, or a deploy occurs.*
+*Note: currently the Heroku deployments for this app are setup with a postgres DB attached so the data persists.*
+*If you setup the app on your own and do not configure a DATABASE_URL environment VAR with a connection string,*
+*the app will default to sqlite and the data will be lost on any dyno restart ore deploy*
 
 ## SPEC
 once running the following calls can be made:

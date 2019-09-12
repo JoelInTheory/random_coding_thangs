@@ -25,5 +25,5 @@ class Thanos(Resource):
                     continue
             db.create_all()
             return {"message": "I finally rest and watch the sun rise on a grateful universe."}, 418
-        except ValueError: # noqa
+        except: # noqa
             return {"message": "nope"}, 500

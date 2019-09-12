@@ -9,12 +9,10 @@ from yousirs.backend.alchemy import backend
 
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from sqlite3 import Connection
 
 app = Flask(__name__)
-app_dir = os.path.dirname(os.path.abspath(__file__))
-db_file = os.path.join(app_dir, 'backend/data/you_sirs.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % db_file
+DB_URL = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['JSON_SORT_KEYS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
@@ -26,14 +24,6 @@ api = Api(app)
 @app.before_first_request
 def create_tables():
     backend.create_all()
-
-# ensure sqlite is enforcing DB schema
-@event.listens_for(Engine, "connect")
-def _set_sqlite_pragma(dbapi_connection, connection_record):
-    if isinstance(dbapi_connection, Connection):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON;")
-        cursor.close()
 
 
 # ROUTES

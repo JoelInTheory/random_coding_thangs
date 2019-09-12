@@ -5,10 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 import os
 
-app_dir = os.path.dirname(os.path.abspath(__file__))
-db_file = os.path.join(app_dir, 'data/you_sirs.db')
-
-engine = create_engine('sqlite:///%s' % db_file, convert_unicode=True)
+DB_URL = os.environ("DATABASE_URL")
+engine = create_engine(DB_URL, pool_size=10)
 
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,

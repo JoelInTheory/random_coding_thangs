@@ -6,33 +6,34 @@ metadata:
       nginix.ingress.kubernetes.io/use-regex: "true"
 spec:
     rules:
-    - http:
+    - host: localhost
+      http:
         paths:
         - path: /
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /users
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /users/.*
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /groups
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /groups/.*
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /easter/eggs
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000
         - path: /easter/eggs/snap
           backend:
             serviceName: yousirs-app
-            servicePort: 8000
+            servicePort: 5000

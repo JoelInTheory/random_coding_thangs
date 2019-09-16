@@ -6,7 +6,6 @@ metadata:
         service: yousirs-app
 spec:
     selector:
-        app: yousirs
+        app: yousirs-app
     ports:
-    - port: 8000
-      targetPort: 8000
+    - port: 5000
